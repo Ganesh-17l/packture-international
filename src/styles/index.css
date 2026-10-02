@@ -1,0 +1,415 @@
+@import "tailwindcss";
+
+@theme {
+  --color-luxury-charcoal: #1A1A1A;
+  --color-luxury-nearblack: #0F0F0F;
+  --color-luxury-ivory: #FAF7F0;
+  --color-luxury-cream: #FAF8F5;
+  --color-luxury-gold: #C5A059;
+  --color-luxury-champagne: #E5D5C5;
+  --color-luxury-beige: #F6F2E9;
+  --color-luxury-sand: #E3DAC9;
+  --color-luxury-offwhite: #FCFBF7;
+
+  /* Master Color System Design Tokens */
+  --color-bg-void-black: #070709;
+  --color-bg-charcoal-core: #141312;
+  --color-bg-warm-ivory: #FAF7F0;
+  --color-bg-stone-parchment: #F6F2E9;
+  --color-bg-limestone-study: #F3EFE6;
+  --color-panel-surface: #FCFBF7;
+  --color-border-architectural: rgba(40, 32, 20, 0.08);
+  --color-border-gold-accent: rgba(197, 160, 89, 0.35);
+  --color-luxury-gold-hover: #B8934C;
+
+  --font-serif: "Cormorant Garamond", "Playfair Display", "Didot", "Georgia", "serif";
+  --font-sans: "Inter", "system-ui", "sans-serif";
+
+  --animate-fade-in: fadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-slide-up: slideUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-scale-up: scaleUp 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-marquee: marquee 30s linear infinite;
+
+  @keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  @keyframes slideUp {
+    0% { opacity: 0; transform: translateY(30px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes scaleUp {
+    0% { transform: scale(1.05); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  @keyframes marquee {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-50%); }
+  }
+}
+
+:root {
+  --bg-void-black: #070709;
+  --bg-charcoal-core: #141312;
+  --bg-warm-ivory: #FAF7F0;
+  --bg-stone-parchment: #F6F2E9;
+  --bg-limestone-study: #F3EFE6;
+  --panel-surface: #FCFBF7;
+  --border-architectural: rgba(40, 32, 20, 0.08);
+  --border-gold-accent: rgba(197, 160, 89, 0.35);
+  --luxury-gold: #C5A059;
+  --luxury-gold-hover: #B8934C;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #FAF7F0; /* Calibrated Warm Ivory background */
+  color: #1A1A1A; /* Charcoal body */
+  scrollbar-gutter: stable;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6, .font-serif {
+  font-family: 'Cormorant Garamond', serif;
+}
+
+/* Custom Premium Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #FAF6EE;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #C5A059;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #A88440;
+}
+
+/* Subtle Grain Overlay for Premium Editorial Feel */
+.bg-grain {
+  position: relative;
+}
+.fixed.bg-grain {
+  position: fixed;
+}
+.absolute.bg-grain {
+  position: absolute;
+}
+.sticky.bg-grain {
+  position: sticky;
+}
+
+.bg-grain::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.025;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Custom premium hover states */
+.premium-link {
+  position: relative;
+}
+
+.premium-link::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 1px;
+  bottom: -2px;
+  left: 0;
+  background-color: currentColor;
+  transform-origin: bottom right;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.premium-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+/* Glassmorphism elements if used with moderation */
+.premium-glass {
+  background: rgba(250, 246, 238, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(197, 160, 89, 0.15);
+}
+
+.premium-glass-dark {
+  background: rgba(26, 26, 26, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Subtle one-time specular light sweep on physical glass swatch selection */
+@keyframes swatchShimmer {
+  0% {
+    transform: translateX(-120%) skewX(-25deg);
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.8;
+  }
+  75% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateX(120%) skewX(-25deg);
+    opacity: 0;
+  }
+}
+
+/* ===================================================
+   LUXURY DESIGN SYSTEM UTILITIES
+   =================================================== */
+
+/* Hairline champagne/gold divider */
+.luxury-divider {
+  height: 1px;
+  background: linear-gradient(90deg, rgba(197, 160, 89, 0) 0%, rgba(197, 160, 89, 0.25) 50%, rgba(197, 160, 89, 0) 100%);
+  width: 100%;
+}
+
+.luxury-divider-left {
+  height: 1px;
+  background: linear-gradient(90deg, rgba(197, 160, 89, 0.3) 0%, rgba(229, 213, 197, 0.1) 70%, transparent 100%);
+}
+
+/* Luxury card with stable image (Zero hover zoom/scale) */
+.luxury-card {
+  background-color: #FCFBF7;
+  border: 1px solid rgba(197, 160, 89, 0.20);
+  border-radius: 2px;
+  transition: border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.luxury-card:hover {
+  border-color: rgba(197, 160, 89, 0.45);
+  box-shadow: 0 12px 28px -8px rgba(40, 32, 20, 0.06);
+  transform: translateY(-2px);
+}
+
+/* Universal 16:9 Banner Image Container */
+.banner-image-container {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+
+.banner-image-container img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* ===================================================
+   UNIFIED ARCHITECTURAL BUTTON SYSTEM (2-TIER)
+   =================================================== */
+
+/* Base button rules: architectural sizing, max 2px radius, 11px font, 0.25em tracking */
+.btn-luxury,
+.btn-luxury-primary,
+.btn-luxury-secondary,
+.btn-luxury-gold,
+.btn-luxury-dark,
+.btn-luxury-light {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  min-height: 48px;
+  padding: 0.75rem 2rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.3;
+  white-space: normal;
+  word-break: keep-all;
+  box-sizing: border-box;
+  max-width: 100%;
+  cursor: pointer;
+  position: relative;
+  border-radius: 2px;
+  user-select: none;
+  transition: background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Stable Icon/Arrow micro-interaction */
+.btn-luxury svg,
+.btn-luxury-primary svg,
+.btn-luxury-secondary svg,
+.btn-luxury-gold svg,
+.btn-luxury-dark svg,
+.btn-luxury-light svg {
+  flex-shrink: 0;
+  width: 0.875rem;
+  height: 0.875rem;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-luxury:hover svg,
+.btn-luxury-primary:hover svg,
+.btn-luxury-secondary:hover svg,
+.btn-luxury-gold:hover svg,
+.btn-luxury-dark:hover svg,
+.btn-luxury-light:hover svg {
+  transform: translateX(3px);
+}
+
+/* --------------------------------------------------
+   TIER 1 — PRIMARY / HIGH INTENT (Solid Gold #C5A059)
+   Use for: REQUEST A QUOTE, major enquiry actions
+   -------------------------------------------------- */
+.btn-luxury-gold,
+.btn-luxury-primary {
+  background-color: #C5A059 !important;
+  color: #1A1A1A !important;
+  border: 1px solid #C5A059 !important;
+  box-shadow: none;
+}
+
+.btn-luxury-gold span,
+.btn-luxury-primary span {
+  color: #1A1A1A !important;
+}
+
+.btn-luxury-gold svg,
+.btn-luxury-primary svg {
+  color: #1A1A1A !important;
+}
+
+.btn-luxury-gold:hover,
+.btn-luxury-primary:hover {
+  background-color: #B8934C !important;
+  border-color: #B8934C !important;
+  color: #1A1A1A !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(197, 160, 89, 0.28);
+}
+
+/* --------------------------------------------------
+   TIER 2 — SECONDARY / EDITORIAL: Light Background
+   Use for: EXPLORE COLLECTIONS, catalogue navigation
+   -------------------------------------------------- */
+.btn-luxury-secondary,
+.btn-luxury-light {
+  background-color: transparent !important;
+  border: 1px solid rgba(40, 32, 20, 0.28) !important;
+  color: #1A1A1A !important;
+}
+
+.btn-luxury-secondary span,
+.btn-luxury-light span {
+  color: #1A1A1A !important;
+}
+
+.btn-luxury-secondary svg,
+.btn-luxury-light svg {
+  color: #C5A059 !important;
+}
+
+.btn-luxury-secondary:hover,
+.btn-luxury-light:hover {
+  background-color: rgba(197, 160, 89, 0.06) !important;
+  border-color: #C5A059 !important;
+  color: #1A1A1A !important;
+  box-shadow: 0 3px 14px rgba(197, 160, 89, 0.16);
+  transform: translateY(-1px);
+}
+
+.btn-luxury-secondary:hover span,
+.btn-luxury-light:hover span {
+  color: #1A1A1A !important;
+}
+
+.btn-luxury-secondary:hover svg,
+.btn-luxury-light:hover svg {
+  color: #B8934C !important;
+}
+
+/* --------------------------------------------------
+   TIER 2 — DARK-BACKGROUND SECONDARY BUTTON
+   Use on: Hero dark background, SEC 08, Footer
+   -------------------------------------------------- */
+.btn-luxury-dark {
+  background-color: transparent !important;
+  border: 1px solid rgba(250, 247, 240, 0.32) !important;
+  color: #FAF7F0 !important;
+}
+
+.btn-luxury-dark span {
+  color: #FAF7F0 !important;
+}
+
+.btn-luxury-dark svg {
+  color: #C5A059 !important;
+}
+
+.btn-luxury-dark:hover {
+  background-color: rgba(197, 160, 89, 0.08) !important;
+  border-color: #C5A059 !important;
+  color: #FAF7F0 !important;
+  box-shadow: 0 4px 18px rgba(197, 160, 89, 0.22);
+  transform: translateY(-1px);
+}
+
+.btn-luxury-dark:hover span {
+  color: #FAF7F0 !important;
+}
+
+.btn-luxury-dark:hover svg {
+  color: #C5A059 !important;
+}
+
+/* Editorial Monospace Badge */
+.editorial-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #1A1A1A;
+}
+
+/* Prefers-reduced-motion: Stop continuous background and decorative animations */
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee,
+  .animate-spin,
+  .animate-pulse,
+  [class*="animate-marquee"] {
+    animation: none !important;
+  }
+}
+
